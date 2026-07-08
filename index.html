@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VerdeVida | Cosméticos Naturais & Orgânicos</title>
+  <meta name="description" content="Descubra a beleza limpa com a VerdeVida. Cosméticos 100% veganos, orgânicos e cruelty-free feitos com ingredientes botânicos de alta performance.">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sage: {
+              DEFAULT: '#8FA89B',
+              hover: '#7b9487',
+            },
+            eucalyptus: '#5E7A6E',
+            forest: '#2D3E35',
+            mint: '#EBF2EE',
+            cream: '#F5F2EB',
+            offwhite: '#FAF9F6',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- CSS Personalizado -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-offwhite text-forest min-h-screen flex flex-col font-sans antialiased">
+
+  <!-- 1. Barra de Anúncios -->
+  <div class="bg-eucalyptus text-white text-center py-2 px-4 text-xs tracking-wider font-medium select-none">
+    ✨ Ganhe Frete Grátis em compras a partir de R$ 150,00!
+  </div>
+
+  <!-- 2. Header / Navbar (Sticky Glassmorphic) -->
+  <header class="sticky top-0 z-40 glass border-b border-slate-100/80 transition-smooth">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2.5 flex-shrink-0 group">
+          <div class="w-10 h-10 rounded-full bg-mint flex items-center justify-center text-eucalyptus group-hover:scale-105 transition-transform duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m14.071+5.071l-.707-.707m-12.728-12.728l-.707-.707m12.728+0l-.707.707M6.343+17.657l-.707.707M16+12a4+4+0 11-8+0+4+4+0+018+0z"></path>
+            </svg>
+          </div>
+          <span class="font-serif text-2xl font-bold tracking-tight text-forest group-hover:text-eucalyptus transition-colors">VerdeVida</span>
+        </a>
+
+        <!-- Busca de Produtos (Desktop) -->
+        <div class="hidden md:flex items-center flex-grow max-w-md relative mx-8">
+          <input type="text" id="search-input" placeholder="Buscar creme, sérum, shampoo..." class="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/80 focus:border-sage focus:ring-1 focus:ring-sage rounded-2xl py-2 px-5 pl-12 text-sm text-forest placeholder-slate-400 outline-none transition-smooth">
+          <div class="absolute left-4 text-slate-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7+7+0 11-14 0+7+7+0 0114+0z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Menu / Ações -->
+        <div class="flex items-center gap-4">
+          <!-- Favoritos -->
+          <button class="text-forest hover:text-rose-500 p-2 rounded-full hover:bg-slate-50 transition-colors hidden sm:block" aria-label="Favoritos">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Botão do Carrinho -->
+          <button id="open-cart-btn" class="relative text-forest hover:text-eucalyptus p-2 rounded-full hover:bg-slate-50 transition-colors" aria-label="Carrinho de compras">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <span id="cart-badge" class="absolute -top-0.5 -right-0.5 bg-sage text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white scale-0 transition-transform duration-300">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Busca de Produtos (Mobile - apenas visível em telas menores) -->
+      <div class="pb-4 md:hidden">
+        <div class="relative w-full">
+          <input type="text" id="search-input-mobile" oninput="document.getElementById('search-input').value = this.value; document.getElementById('search-input').dispatchEvent(new Event('input'))" placeholder="Buscar cosméticos..." class="w-full bg-slate-50 border border-slate-200 focus:border-sage rounded-xl py-2 px-4 pl-10 text-xs text-forest placeholder-slate-400 outline-none">
+          <div class="absolute left-3.5 top-2.5 text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7+7+0 11-14 0+7+7+0 0114+0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 3. Hero Section (Banner Principal) -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-mint/50 via-cream/30 to-mint/20 py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Texto Hero -->
+        <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sage/10 text-eucalyptus text-xs font-semibold uppercase tracking-wider">
+            🌿 Beleza Limpa & Consciente
+          </span>
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-forest leading-tight">
+            Nutrição botânica para o seu <span class="italic text-eucalyptus">ritual diário</span> de skincare.
+          </h1>
+          <p class="text-sm sm:text-base text-slate-500 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Formulados com extratos puros de plantas, óleos prensados a frio e ativos naturais bio-compatíveis. Sinta a transformação da sua pele sem agredir o planeta.
+          </p>
+          <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href="#produtos" class="bg-sage hover:bg-eucalyptus text-white font-semibold px-8 py-4 rounded-2xl shadow-lg shadow-sage/10 hover:shadow-eucalyptus/20 hover:-translate-y-0.5 transition-smooth text-center">
+              Ver Coleção
+            </a>
+            <a href="#filosofia" class="border border-sage/60 hover:border-eucalyptus hover:bg-mint/30 text-forest font-semibold px-8 py-4 rounded-2xl transition-smooth text-center">
+              Nossa Filosofia
+            </a>
+          </div>
+        </div>
+
+        <!-- Imagem Hero -->
+        <div class="lg:col-span-6 flex justify-center relative">
+          <!-- Círculos Decorativos Pastel -->
+          <div class="absolute -top-12 -left-12 w-64 h-64 rounded-full bg-cream/60 blur-3xl -z-10"></div>
+          <div class="absolute -bottom-8 -right-8 w-72 h-72 rounded-full bg-mint/80 blur-3xl -z-10"></div>
+          
+          <div class="relative w-full max-w-md aspect-[4/5] bg-white p-4 rounded-[40px] shadow-2xl shadow-sage/5 border border-slate-100 overflow-hidden animate-float">
+            <img src="../Cosmeticos/assets/img/cosmeticos.jpg" alt="Cosméticos Naturais VerdeVida" class="w-full h-full object-cover rounded-[32px]">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Diferenciais / Benefícios da Marca -->
+  <section id="filosofia" class="py-16 bg-white border-y border-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+        
+        <!-- Benefício 1 -->
+        <div class="flex flex-col items-center text-center space-y-3 p-2 group">
+          <div class="w-14 h-14 rounded-2xl bg-mint flex items-center justify-center text-eucalyptus group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+          </div>
+          <h3 class="font-serif text-base font-semibold text-forest">100% Orgânico</h3>
+          <p class="text-xs text-slate-400 max-w-[200px]">Matérias-primas cultivadas sem agrotóxicos ou toxinas.</p>
+        </div>
+
+        <!-- Benefício 2 -->
+        <div class="flex flex-col items-center text-center space-y-3 p-2 group">
+          <div class="w-14 h-14 rounded-2xl bg-mint flex items-center justify-center text-eucalyptus group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="font-serif text-base font-semibold text-forest">Cruelty-Free</h3>
+          <p class="text-xs text-slate-400 max-w-[200px]">Nenhum de nossos produtos ou ingredientes é testado em animais.</p>
+        </div>
+
+        <!-- Benefício 3 -->
+        <div class="flex flex-col items-center text-center space-y-3 p-2 group">
+          <div class="w-14 h-14 rounded-2xl bg-mint flex items-center justify-center text-eucalyptus group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+            </svg>
+          </div>
+          <h3 class="font-serif text-base font-semibold text-forest font-medium">Fórmula Vegana</h3>
+          <p class="text-xs text-slate-400 max-w-[200px]">Zero ingredientes de origem animal, 100% de origem botânica.</p>
+        </div>
+
+        <!-- Benefício 4 -->
+        <div class="flex flex-col items-center text-center space-y-3 p-2 group">
+          <div class="w-14 h-14 rounded-2xl bg-mint flex items-center justify-center text-eucalyptus group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <h3 class="font-serif text-base font-semibold text-forest">Eco-Embalagem</h3>
+          <p class="text-xs text-slate-400 max-w-[200px]">Frascos de vidro e embalagens de papel reciclado e biodegradável.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Filtros & Catálogo de Produtos -->
+  <section id="produtos" class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Cabeçalho seção -->
+    <div class="text-center max-w-xl mx-auto mb-12">
+      <span class="text-xs font-semibold text-eucalyptus uppercase tracking-wider">Produtos Estrela</span>
+      <h2 class="font-serif text-3xl md:text-4xl text-forest mt-1">Conheça o nosso cuidado botânico</h2>
+      <p class="text-xs text-slate-400 mt-2">Escolha itens desenvolvidos especificamente para o seu tipo e necessidade de pele.</p>
+    </div>
+
+    <!-- Controles de Categoria e Ordenação -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 border-b border-slate-100 pb-6">
+      
+      <!-- Categorias (Pastel green buttons) -->
+      <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+        <button data-category="all" class="category-btn bg-sage text-white font-medium text-xs px-5 py-2.5 rounded-full transition-smooth border border-slate-100 shadow-sm">Todos</button>
+        <button data-category="skin-care" class="category-btn bg-white text-forest hover:bg-mint/45 font-medium text-xs px-5 py-2.5 rounded-full transition-smooth border border-slate-100 shadow-sm">Skin Care</button>
+        <button data-category="hair-care" class="category-btn bg-white text-forest hover:bg-mint/45 font-medium text-xs px-5 py-2.5 rounded-full transition-smooth border border-slate-100 shadow-sm">Cabelo</button>
+        <button data-category="body-care" class="category-btn bg-white text-forest hover:bg-mint/45 font-medium text-xs px-5 py-2.5 rounded-full transition-smooth border border-slate-100 shadow-sm">Corpo</button>
+      </div>
+
+      <!-- Ordenação -->
+      <div class="flex items-center gap-3">
+        <label for="sort-select" class="text-xs font-medium text-slate-400">Ordenar por</label>
+        <select id="sort-select" class="bg-white border border-slate-200 text-xs font-medium text-forest rounded-xl py-2 px-4 outline-none focus:border-sage transition-smooth">
+          <option value="popular">Mais Recomendados</option>
+          <option value="low-to-high">Preço: Menor para Maior</option>
+          <option value="high-to-low">Preço: Maior para Menor</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Grid de Produtos Dinâmico -->
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Inserido dinamicamente pelo JS -->
+    </div>
+
+  </section>
+
+  <!-- 6. Banner Promocional / Ingrediente Chave -->
+  <section class="bg-mint py-16 md:py-20 my-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-[40px] overflow-hidden shadow-xl border border-slate-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Imagem Ingrediente -->
+        <div class="lg:col-span-5 h-[320px] lg:h-[500px]">
+          <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1200&auto=format&fit=crop" alt="Aloe vera fresco e botânica" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Descrição -->
+        <div class="lg:col-span-7 p-8 md:p-12 lg:pr-16 space-y-6">
+          <span class="text-xs font-semibold text-eucalyptus uppercase tracking-wider">Nosso Ingrediente Estrela</span>
+          <h2 class="font-serif text-3xl md:text-4xl text-forest">A pureza da Aloe Vera colhida ao amanhecer</h2>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            Usamos como base de nossas formulações o gel orgânico de Aloe Vera extraído a frio poucas horas após a colheita. Rico em vitaminas, enzimas e aminoácidos, ele hidrata a pele de forma inteligente, acalmando irritações e fornecendo uma barreira protetora invisível e não oleosa.
+          </p>
+          <div class="grid grid-cols-2 gap-4 text-xs font-medium text-forest pt-2">
+            <span class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sage"></span> Hidratação Bio-compatível
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sage"></span> Cicatrização Acelerada
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sage"></span> Calmante de Inflamações
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sage"></span> Nutrição Celular Ativa
+            </span>
+          </div>
+          <div class="pt-2">
+            <a href="#produtos" class="inline-flex items-center gap-2 bg-forest hover:bg-eucalyptus text-white font-semibold px-6 py-3.5 rounded-2xl shadow-md transition-smooth">
+              Explorar Linha Facial
+              <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Depoimentos / Testemunhas -->
+  <section class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-xl mx-auto mb-12">
+      <span class="text-xs font-semibold text-eucalyptus uppercase tracking-wider">Depoimentos</span>
+      <h2 class="font-serif text-3xl text-forest mt-1">Quem já mudou de rotina aprova</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Card Depoimento 1 -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-100 flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-smooth">
+        <div>
+          <!-- Estrelas -->
+          <div class="text-amber-400 text-xs tracking-wider mb-4">★★★★★</div>
+          <p class="text-sm text-slate-500 italic leading-relaxed">
+            "O Sérum Iluminador Botânico mudou completamente a textura da minha pele. Em duas semanas, minhas manchinhas de acne clarearam muito e sinto meu rosto super viçoso e saudável."
+          </p>
+        </div>
+        <div class="flex items-center gap-4 mt-6">
+          <div class="w-11 h-11 rounded-full bg-mint overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop" alt="Mariana Silva" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <h4 class="font-serif text-sm font-semibold text-forest">Mariana Silva</h4>
+            <span class="text-[10px] text-slate-400 font-medium">São Paulo, SP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Depoimento 2 -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-100 flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-smooth">
+        <div>
+          <!-- Estrelas -->
+          <div class="text-amber-400 text-xs tracking-wider mb-4">★★★★★</div>
+          <p class="text-sm text-slate-500 italic leading-relaxed">
+            "Amei a proposta do shampoo sólido! Rende absurdamente e o cheirinho de menta é maravilhoso, dá uma refrescância incrível. Meu cabelo ficou super soltinho e brilhante."
+          </p>
+        </div>
+        <div class="flex items-center gap-4 mt-6">
+          <div class="w-11 h-11 rounded-full bg-mint overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop" alt="Lucas Barbosa" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <h4 class="font-serif text-sm font-semibold text-forest">Lucas Barbosa</h4>
+            <span class="text-[10px] text-slate-400 font-medium">Belo Horizonte, MG</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Depoimento 3 -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-100 flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-smooth">
+        <div>
+          <!-- Estrelas -->
+          <div class="text-amber-400 text-xs tracking-wider mb-4">★★★★★</div>
+          <p class="text-sm text-slate-500 italic leading-relaxed">
+            "Estava com a pele muito descamada e o Bálsamo de Calêndula salvou meu rosto. Hidrata profundamente sem pesar e acalma a vermelhidão na hora. Recomendo muito!"
+          </p>
+        </div>
+        <div class="flex items-center gap-4 mt-6">
+          <div class="w-11 h-11 rounded-full bg-mint overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" alt="Gabriela Souza" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <h4 class="font-serif text-sm font-semibold text-forest">Gabriela Souza</h4>
+            <span class="text-[10px] text-slate-400 font-medium">Curitiba, PR</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 8. Newsletter Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+    <div class="bg-cream rounded-[40px] py-12 px-6 md:p-16 text-center space-y-6 relative overflow-hidden">
+      <!-- Detalhes de Folhas -->
+      <div class="absolute -top-12 -left-12 text-sage/10 select-none pointer-events-none">
+        <svg class="w-48 h-48" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 9 21 9 21s6-3 10-10c2-3.5 0-4.5-2-3zm-6.5 5.5c-3 1.5-5 5.5-5 5.5s3.5-1 5.5-3.5c1.5-2 1-3.5-.5-2z"></path></svg>
+      </div>
+
+      <span class="text-xs font-semibold text-eucalyptus uppercase tracking-wider">Clube VerdeVida</span>
+      <h2 class="font-serif text-3xl md:text-4xl text-forest max-w-xl mx-auto">Receba dicas de autocuidado natural e 10% de desconto</h2>
+      <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+        Cadastre seu e-mail para receber conteúdos sobre cosmetologia natural e ofertas especiais em primeira mão.
+      </p>
+      
+      <!-- Formulário de e-mail -->
+      <form onsubmit="event.preventDefault(); showToast('Bem-vindo à VerdeVida! Cupom enviado por e-mail.'); this.reset()" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto relative z-10 pt-2">
+        <input type="email" required placeholder="Seu melhor e-mail" class="flex-grow bg-white border border-slate-200 focus:border-sage focus:ring-1 focus:ring-sage rounded-2xl py-3 px-5 text-sm text-forest placeholder-slate-400 outline-none transition-smooth">
+        <button type="submit" class="bg-forest hover:bg-eucalyptus text-white font-semibold text-sm px-6 py-3.5 rounded-2xl transition-smooth shadow-md shadow-forest/10 hover:shadow-eucalyptus/20">
+          Inscrever-se
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 9. Footer (Rodapé) -->
+  <footer class="bg-forest text-cream mt-auto border-t border-eucalyptus/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+        
+        <!-- Info da Marca -->
+        <div class="md:col-span-5 space-y-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sage">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m14.071+5.071l-.707-.707m-12.728-12.728l-.707-.707m12.728+0l-.707.707M6.343+17.657l-.707.707M16+12a4+4+0 11-8+0+4+4+0+018+0z"></path>
+              </svg>
+            </div>
+            <span class="font-serif text-xl font-bold tracking-tight text-white">VerdeVida</span>
+          </div>
+          <p class="text-xs text-cream/70 leading-relaxed max-w-sm">
+            Nossa missão é resgatar a conexão humana com a natureza através de rotinas de cuidado limpas, eficazes e éticas. Beleza de dentro para fora, respeitando toda forma de vida.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <!-- Redes Sociais Mocks -->
+            <a href="#" class="w-8 h-8 rounded-full bg-white/5 hover:bg-sage hover:text-white flex items-center justify-center transition-colors text-cream/80" aria-label="Instagram">📸</a>
+            <a href="#" class="w-8 h-8 rounded-full bg-white/5 hover:bg-sage hover:text-white flex items-center justify-center transition-colors text-cream/80" aria-label="Facebook">📘</a>
+            <a href="#" class="w-8 h-8 rounded-full bg-white/5 hover:bg-sage hover:text-white flex items-center justify-center transition-colors text-cream/80" aria-label="Pinterest">📌</a>
+          </div>
+        </div>
+
+        <!-- Links Úteis -->
+        <div class="md:col-span-2 space-y-3">
+          <h4 class="font-serif text-sm font-semibold text-white">Explorar</h4>
+          <ul class="text-xs space-y-2 text-cream/70">
+            <li><a href="#produtos" class="hover:text-sage transition-colors">Todos os Produtos</a></li>
+            <li><a href="#produtos" class="hover:text-sage transition-colors">Facial</a></li>
+            <li><a href="#produtos" class="hover:text-sage transition-colors">Capilar</a></li>
+            <li><a href="#produtos" class="hover:text-sage transition-colors">Corporal</a></li>
+          </ul>
+        </div>
+
+        <!-- Sobre Nós -->
+        <div class="md:col-span-2 space-y-3">
+          <h4 class="font-serif text-sm font-semibold text-white">Sobre</h4>
+          <ul class="text-xs space-y-2 text-cream/70">
+            <li><a href="#filosofia" class="hover:text-sage transition-colors">Nossa Filosofia</a></li>
+            <li><a href="#" class="hover:text-sage transition-colors">Ingredientes Puros</a></li>
+            <li><a href="#" class="hover:text-sage transition-colors">Sustentabilidade</a></li>
+            <li><a href="#" class="hover:text-sage transition-colors">Contato</a></li>
+          </ul>
+        </div>
+
+        <!-- Suporte -->
+        <div class="md:col-span-3 space-y-3">
+          <h4 class="font-serif text-sm font-semibold text-white">Ajuda & Dúvidas</h4>
+          <ul class="text-xs space-y-2 text-cream/70">
+            <li><a href="#" class="hover:text-sage transition-colors">Perguntas Frequentes</a></li>
+            <li><a href="#" class="hover:text-sage transition-colors">Envios & Devoluções</a></li>
+            <li><a href="#" class="hover:text-sage transition-colors">Termos de Serviço</a></li>
+            <li><span class="text-sage font-medium">suporte@verdevida.com.br</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t border-eucalyptus/15 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-[10px] text-cream/50">&copy; 2026 VerdeVida Cosméticos Naturais Ltda. Todos os direitos reservados.</p>
+        <div class="flex items-center gap-3 opacity-60 text-xs">
+          <span>💳 PIX</span>
+          <span>💳 Cartão de Crédito</span>
+          <span>📄 Boleto</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 10. Gaveta Lateral do Carrinho (Cart Drawer) -->
+  <div id="cart-overlay" class="fixed inset-0 bg-forest/40 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+  <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-offwhite shadow-2xl border-l border-slate-100 z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    
+    <!-- Cabeçalho Gaveta -->
+    <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-white">
+      <div class="flex items-center gap-2.5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-eucalyptus" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <h3 class="font-serif text-lg font-bold text-forest">Seu Carrinho</h3>
+      </div>
+      <button id="close-cart-btn" class="p-2 text-slate-400 hover:text-forest hover:bg-slate-50 rounded-full transition-colors" aria-label="Fechar carrinho">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Barra de Progresso de Frete Grátis -->
+    <div class="bg-mint/60 p-4 border-b border-slate-100">
+      <div id="free-shipping-message" class="text-xs text-forest/80 mb-2">
+        Adicione mais <strong>R$ 150,00</strong> para ganhar <strong>Frete Grátis</strong>!
+      </div>
+      <div class="w-full bg-slate-200/60 h-2.5 rounded-full overflow-hidden">
+        <div id="free-shipping-progress" class="bg-sage h-full w-0 transition-all duration-500 rounded-full"></div>
+      </div>
+    </div>
+
+    <!-- Lista de Itens do Carrinho -->
+    <div id="cart-items" class="flex-grow overflow-y-auto p-4 space-y-3">
+      <!-- Inserido dinamicamente pelo JS -->
+    </div>
+
+    <!-- Rodapé Gaveta -->
+    <div class="p-5 border-t border-slate-100 bg-white space-y-4">
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs text-slate-400">
+          <span>Subtotal</span>
+          <span id="cart-subtotal" class="font-semibold text-forest">R$ 0,00</span>
+        </div>
+        <div class="flex justify-between text-xs text-slate-400">
+          <span>Estimativa de Frete</span>
+          <span class="font-semibold text-eucalyptus text-[10px] uppercase">Calculado no checkout</span>
+        </div>
+        <div class="flex justify-between text-base font-bold text-forest pt-2 border-t border-slate-50">
+          <span>Total estimado</span>
+          <span id="cart-total" class="text-eucalyptus">R$ 0,00</span>
+        </div>
+      </div>
+
+      <button id="checkout-btn" onclick="openCheckout()" class="w-full btn-primary bg-sage hover:bg-eucalyptus text-white py-3.5 px-6 rounded-2xl font-semibold shadow-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth">
+        <span>Finalizar Pedido</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </button>
+      
+      <button onclick="closeCartDrawer()" class="w-full text-center text-xs text-slate-400 hover:text-forest transition-colors font-medium">
+        Continuar Comprando
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- 11. Modal de Visualização Rápida (Quick View Modal) -->
+  <div id="quick-view-modal" class="fixed inset-0 bg-forest/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-[32px] w-full max-w-3xl overflow-hidden shadow-2xl border border-slate-100 relative p-6 md:p-8 animate-scale-up">
+      
+      <!-- Botão Fechar -->
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 md:top-6 md:right-6 text-slate-400 hover:text-forest p-2 hover:bg-slate-50 rounded-full transition-colors z-10" aria-label="Fechar visualização rápida">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Conteúdo inserido dinamicamente pelo JS -->
+      <div id="quick-view-content"></div>
+
+    </div>
+  </div>
+
+  <!-- 12. Modal de Checkout Simulado -->
+  <div id="checkout-modal" class="fixed inset-0 bg-forest/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-[32px] w-full max-w-xl overflow-hidden shadow-2xl border border-slate-100 relative p-6 md:p-8 animate-scale-up max-h-[90vh] overflow-y-auto">
+      
+      <!-- Botão Fechar -->
+      <button onclick="closeCheckout()" class="absolute top-4 right-4 md:top-6 md:right-6 text-slate-400 hover:text-forest p-2 hover:bg-slate-50 rounded-full transition-colors z-10" aria-label="Fechar checkout">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <div class="text-center md:text-left mb-6">
+        <h3 class="font-serif text-2xl text-forest">Finalizar Pedido</h3>
+        <p class="text-xs text-slate-400 mt-1">Insira seus dados para simular a compra na VerdeVida</p>
+      </div>
+
+      <!-- Formulário de Compra -->
+      <form id="checkout-form-element" onsubmit="submitCheckout(event)" class="space-y-4">
+        
+        <!-- Resumo Rápido de Valores -->
+        <div class="bg-mint/40 p-5 rounded-2xl border border-slate-100/50">
+          <h4 class="font-serif text-xs font-semibold text-forest uppercase tracking-wider mb-3">Resumo da compra</h4>
+          <div id="checkout-summary">
+            <!-- Dinâmico pelo JS -->
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="checkout-name" class="block text-[11px] font-semibold text-forest uppercase tracking-wider mb-1.5">Nome Completo</label>
+            <input type="text" id="checkout-name" required placeholder="João da Silva" class="w-full bg-slate-50 border border-slate-200 focus:border-sage rounded-xl py-2.5 px-4 text-xs outline-none">
+          </div>
+          <div>
+            <label for="checkout-email" class="block text-[11px] font-semibold text-forest uppercase tracking-wider mb-1.5">E-mail</label>
+            <input type="email" id="checkout-email" required placeholder="joao@exemplo.com" class="w-full bg-slate-50 border border-slate-200 focus:border-sage rounded-xl py-2.5 px-4 text-xs outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label for="checkout-address" class="block text-[11px] font-semibold text-forest uppercase tracking-wider mb-1.5">Endereço de Entrega</label>
+          <input type="text" id="checkout-address" required placeholder="Rua das Flores, 123 - Centro" class="w-full bg-slate-50 border border-slate-200 focus:border-sage rounded-xl py-2.5 px-4 text-xs outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="checkout-city" class="block text-[11px] font-semibold text-forest uppercase tracking-wider mb-1.5">Cidade</label>
+            <input type="text" id="checkout-city" required placeholder="São Paulo" class="w-full bg-slate-50 border border-slate-200 focus:border-sage rounded-xl py-2.5 px-4 text-xs outline-none">
+          </div>
+          <div>
+            <label for="checkout-zip" class="block text-[11px] font-semibold text-forest uppercase tracking-wider mb-1.5">CEP</label>
+            <input type="text" id="checkout-zip" required placeholder="01234-567" class="w-full bg-slate-50 border border-slate-200 focus:border-sage rounded-xl py-2.5 px-4 text-xs outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-forest uppercase tracking-wider mb-1.5">Forma de Pagamento Simulada</label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="border border-sage/40 bg-mint/10 hover:bg-mint/30 rounded-xl p-3 flex items-center justify-center gap-2 cursor-pointer transition-colors text-xs font-semibold text-forest">
+              <input type="radio" name="payment" checked class="text-sage focus:ring-sage h-4 w-4">
+              <span>Pix (Imediato)</span>
+            </label>
+            <label class="border border-slate-200 hover:border-sage/40 hover:bg-slate-50/50 rounded-xl p-3 flex items-center justify-center gap-2 cursor-pointer transition-colors text-xs font-semibold text-forest">
+              <input type="radio" name="payment" class="text-sage focus:ring-sage h-4 w-4">
+              <span>Cartão de Crédito</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full btn-primary bg-sage hover:bg-eucalyptus text-white py-4 px-6 rounded-2xl font-bold shadow-md transition-smooth flex items-center justify-center gap-2">
+          <span>Confirmar e Finalizar Simulação</span>
+        </button>
+
+      </form>
+
+      <!-- Estado de Carregamento -->
+      <div id="checkout-loading" class="hidden flex-col items-center justify-center py-16 space-y-4">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-sage border-t-transparent"></div>
+        <p class="text-sm font-semibold text-forest">Processando sua compra na VerdeVida...</p>
+        <p class="text-xs text-slate-400">Isso é apenas uma simulação de e-commerce.</p>
+      </div>
+
+      <!-- Estado de Sucesso -->
+      <div id="checkout-success" class="hidden flex-col items-center justify-center text-center py-10 space-y-6">
+        <div class="w-20 h-20 rounded-full bg-mint flex items-center justify-center text-eucalyptus animate-scale-up">
+          <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <div class="space-y-2">
+          <h4 class="font-serif text-2xl text-forest">Pedido Confirmado! 🎉</h4>
+          <p class="text-sm text-slate-500 max-w-sm">Seu pedido <strong id="order-number" class="text-forest">#VV-123456</strong> foi gerado com sucesso nesta demonstração.</p>
+          <p class="text-xs text-slate-400">Em um e-commerce real, as informações de faturamento e detalhes do envio seriam enviadas para seu e-mail.</p>
+        </div>
+        <button onclick="finishOrder()" class="btn-primary bg-sage hover:bg-eucalyptus text-white font-semibold text-xs px-8 py-3.5 rounded-2xl transition-smooth shadow-md">
+          Voltar para a Loja
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript Principal -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+/* VerdeVida Cosméticos - Estilos Personalizados */
+
+/* Importação de Fontes Premium */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  
+  /* Cores do Design System */
+  --color-sage: #8FA89B;
+  --color-sage-hover: #7b9487;
+  --color-eucalyptus: #5E7A6E;
+  --color-forest: #2D3E35;
+  --color-mint: #EBF2EE;
+  --color-cream: #F5F2EB;
+  --color-offwhite: #FAF9F6;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-offwhite);
+  color: var(--color-forest);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Scrollbar Personalizado (Sage Green) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-offwhite);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sage);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-eucalyptus);
+}
+
+/* Custom Selection */
+::selection {
+  background-color: rgba(143, 168, 155, 0.3);
+  color: var(--color-forest);
+}
+
+/* Animações e Transições */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efeito de flutuação suave para a imagem do hero */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Animação para a Gaveta do Carrinho (Cart Drawer) */
+.cart-drawer-overlay {
+  transition: opacity 0.3s ease;
+}
+
+.cart-drawer {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cart-drawer.open {
+  transform: translateX(0);
+}
+
+.cart-drawer.closed {
+  transform: translateX(100%);
+}
+
+/* Animações de Fade-in para Modais */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Estilo para Botões e Inputs do E-commerce */
+.btn-primary {
+  background-color: var(--color-sage);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-eucalyptus);
+}
+
+.btn-secondary {
+  border: 1px solid var(--color-sage);
+  color: var(--color-forest);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-mint);
+}
