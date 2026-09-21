@@ -1,13 +1,16 @@
 // VerdeVida Cosméticos - Lógica da Aplicação (E-commerce)
 
 // Banco de Dados de Produtos (Mock)
+// VerdeVida Cosméticos - Lógica da Aplicação (E-commerce)
+
+// Banco de Dados de Produtos (Mock) - 100% integrado ao Azure Blob Storage
 const PRODUCTS = [
   {
     id: 1,
     name: "Sérum Iluminador Botânico",
     price: 129.90,
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/serum-iluminador.png",
     description: "Um sérum facial ultra-leve formulado com vitamina C estabilizada e ácido hialurônico botânico. Ilumina a pele, reduz manchas e hidrata profundamente de forma natural.",
     ingredients: "Extrato de Aloe Vera, Vitamina C (10%), Ácido Hialurônico Botânico, Extrato de Chá Verde, Óleo Essencial de Limão Siciliano.",
     usage: "Aplique de 3 a 5 gotas no rosto limpo e seco pela manhã e à noite. Massageie suavemente até a absorção total. Utilize sempre protetor solar durante o dia.",
@@ -19,7 +22,7 @@ const PRODUCTS = [
     name: "Bálsamo Regenerador Calêndula",
     price: 89.90,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?q=80&w=600&auto=format&fit=crop",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/balsamo-regenerador.png",
     description: "Creme facial super nutritivo com óleo de calêndula e manteiga de karité pura. Acalma peles sensíveis, repara a barreira cutânea e promove hidratação por 24 horas.",
     ingredients: "Hidrolato de Calêndula, Manteiga de Karité Orgânica, Óleo de Semente de Uva, Extrato de Camomila, Vitamina E.",
     usage: "Espalhe uma pequena quantidade sobre o rosto e pescoço com movimentos ascendentes após o sérum. Ideal para uso noturno ou peles secas pela manhã.",
@@ -31,7 +34,7 @@ const PRODUCTS = [
     name: "Máscara Detox Alecrim & Argila",
     price: 74.90,
     rating: 4.7,
-    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600&auto=format&fit=crop",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/mascara-detox.png",
     description: "Máscara de argila verde rica em minerais enriquecida com óleo essencial de alecrim e tea tree. Limpa profundamente os poros, controla a oleosidade excessiva e previne acnes.",
     ingredients: "Argila Verde Montmorilonita, Gel de Aloe Vera, Óleo Essencial de Alecrim, Óleo de Melaleuca (Tea Tree), Extrato de Pepino.",
     usage: "Aplique uma camada generosa no rosto limpo, evitando a área dos olhos. Deixe agir por 10 a 15 minutos (não deixe secar completamente) e remova com água morna. Use 1-2 vezes por semana.",
@@ -43,7 +46,7 @@ const PRODUCTS = [
     name: "Óleo de Rosa Mosqueta & Jojoba",
     price: 115.00,
     rating: 4.9,
-    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=600&auto=format&fit=crop",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/oleo-rosa-mosqueta.png",
     description: "Um blend luxuoso de óleos vegetais prensados a frio que regeneram a pele, reduzem linhas finas de expressão e combatem o envelhecimento precoce de forma suave.",
     ingredients: "Óleo de Rosa Mosqueta 100% Puro, Óleo de Jojoba Orgânico, Óleo de Argan, Óleo Essencial de Lavanda, Tocopherol (Vitamina E).",
     usage: "Massageie 2 a 3 gotas no rosto limpo e levemente úmido à noite, como último passo da sua rotina de cuidados faciais.",
@@ -55,7 +58,7 @@ const PRODUCTS = [
     name: "Bruma Facial Aloe & Pepino",
     price: 59.90,
     rating: 4.6,
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600&auto=format&fit=crop",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/bruma-facial.png",
     description: "Bruma refrescante e equilibrante que tonifica a pele e devolve o pH natural após a limpeza. Enriquecida com aloe vera, pepino e água de rosas orgânica.",
     ingredients: "Hidrolato de Rosas, Extrato de Pepino, Extrato de Aloe Vera, D-Pantenol (Pró-Vitamina B5), Gluconolactona.",
     usage: "Borrifar diretamente sobre a pele limpa do rosto e pescoço a uma distância de 20cm, ou aplicar com um disco de algodão. Pode ser usado ao longo do dia para refrescar.",
@@ -67,7 +70,7 @@ const PRODUCTS = [
     name: "Barra Purificante Menta & Alecrim",
     price: 42.00,
     rating: 4.8,
-    image: "assets/img/Barra.jpg",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/Barra.jpg",
     description: "Shampoo sólido natural concentrado, rende até 60 lavagens. Limpa suavemente sem ressecar, estimula o crescimento saudável e fortalece os fios. Zero embalagens plásticas!",
     ingredients: "Isetionato de Sódio (tensoativo do coco), Argila Verde, Óleo de Rícino, Óleo Essencial de Menta Piperita, Óleo Essencial de Alecrim.",
     usage: "Friccione a barra molhada nas mãos até espumar ou aplique diretamente no couro cabeludo molhado. Massageie suavemente e enxágue bem.",
@@ -79,7 +82,7 @@ const PRODUCTS = [
     name: "Manteiga Corporal Capim-Limão",
     price: 68.00,
     rating: 4.7,
-    image: "assets/img/Manteiga.jpg",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/Manteiga.jpg",
     description: "Creme corporal altamente hidratante com aroma revigorante de capim-limão. Deixa a pele macia, aveludada e profundamente nutrida, sem toque pegajoso.",
     ingredients: "Óleo de Coco Orgânico, Manteiga de Cupuaçu, Extrato de Capim-Limão, Glicerina Vegetal, Óleo Essencial de Capim-Limão.",
     usage: "Aplique por todo o corpo, massageando suavemente até total absorção, de preferência após o banho com a pele ainda levemente úmida.",
@@ -91,7 +94,7 @@ const PRODUCTS = [
     name: "Glow Esfoliante Açúcar & Café",
     price: 64.90,
     rating: 4.9,
-    image: "assets/img/esfoliante.jpg",
+    image: "https://stfatecdesafiod2026v3.blob.core.windows.net/assets-spa/esfoliante.jpg",
     description: "Esfoliante físico de açúcar de coco e grãos de café selecionados, infundidos com óleos vegetais. Remove células mortas, ativa a circulação e estimula a regeneração da pele.",
     ingredients: "Açúcar de Coco Orgânico, Café Arábica Moído, Óleo de Amêndoas Doces, Óleo de Coco, Extrato de Baunilha.",
     usage: "Durante o banho, aplique sobre a pele úmida com movimentos circulares e suaves. Enxágue apenas com água para manter a hidratação dos óleos naturais. Use 2 vezes por semana.",
