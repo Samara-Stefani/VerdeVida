@@ -460,7 +460,7 @@ window.openQuickView = function(productId) {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[85vh] overflow-y-auto md:overflow-hidden">
       <!-- Imagem -->
       <div class="relative bg-mint rounded-2xl overflow-hidden aspect-square md:aspect-auto md:h-full min-h-[300px]">
-        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+        <img src="${product.image}" alt="${product.name}" crossorigin="anonymous" class="w-full h-full object-cover">
       </div>
       <!-- Detalhes -->
       <div class="flex flex-col justify-between py-1">
